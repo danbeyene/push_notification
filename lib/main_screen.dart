@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:push_notification/new_screen.dart';
+import 'package:push_notification/notification_badge.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -21,11 +22,13 @@ class _MainScreenState extends State<MainScreen> {
   TextEditingController body = TextEditingController();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  late int _totalNotification;
   @override
   void initState() {
     requestPermission();
     getToken();
     initInfo();
+    _totalNotification = 0;
     super.initState();
   }
 
@@ -36,6 +39,8 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            NotificationBadge(totalNotification: _totalNotification),
+            SizedBox(height: 40,),
             TextFormField(
               controller: username,
             ),
@@ -160,6 +165,9 @@ class _MainScreenState extends State<MainScreen> {
       await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
           message.notification?.body, platformChannelSpecifics,
           payload: message.data['body']);
+      setState(() {
+        _totalNotification++;
+      });
     });
   }
 
