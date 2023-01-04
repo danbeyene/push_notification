@@ -36,51 +36,54 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            NotificationBadge(totalNotification: _totalNotification),
-            SizedBox(height: 40,),
-            TextFormField(
-              controller: username,
-            ),
-            TextFormField(
-              controller: title,
-            ),
-            TextFormField(
-              controller: body,
-            ),
-            GestureDetector(
-              onTap: () async {
-                String name = username.text.trim();
-                String titleText = title.text;
-                String bodyText = body.text;
-                if (name != "") {
-                  DocumentSnapshot snap = await FirebaseFirestore.instance
-                      .collection('UserTokens')
-                      .doc(name)
-                      .get();
-                  String token = snap['token'];
-                  debugPrint(token);
-                  sendMessage(token, titleText, bodyText);
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.all(20),
-                height: 40,
-                width: 200,
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(color: Colors.redAccent.withOpacity(0.5))
-                    ]),
-                child: Center(
-                  child: Text('Button'),
-                ),
+        child: Container(
+          margin: const EdgeInsets.all(40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              NotificationBadge(totalNotification: _totalNotification),
+              const SizedBox(height: 40,),
+              TextFormField(
+                controller: username,
               ),
-            )
-          ],
+              TextFormField(
+                controller: title,
+              ),
+              TextFormField(
+                controller: body,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  String name = username.text.trim();
+                  String titleText = title.text;
+                  String bodyText = body.text;
+                  if (name != "") {
+                    DocumentSnapshot snap = await FirebaseFirestore.instance
+                        .collection('UserTokens')
+                        .doc(name)
+                        .get();
+                    String token = snap['token'];
+                    debugPrint(token);
+                    sendMessage(token, titleText, bodyText);
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.all(20),
+                  height: 40,
+                  width: 200,
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(color: Colors.redAccent.withOpacity(0.5))
+                      ]),
+                  child: Center(
+                    child: Text('Button'),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
