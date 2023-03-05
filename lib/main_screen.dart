@@ -156,8 +156,8 @@ class _MainScreenState extends State<MainScreen> {
       );
       AndroidNotificationDetails androidPlatformChannelSpecifics =
           AndroidNotificationDetails(
-        'push_notification', 'push_notification', importance: Importance.high,
-        styleInformation: bigTextStyleInformation, priority: Priority.high,
+        'push_notification', 'push_notification', importance: Importance.max,
+        styleInformation: bigTextStyleInformation, priority: Priority.max,
         playSound: true,
         //sound: RawResourceAndroidNotificationSound('notification')
       );
